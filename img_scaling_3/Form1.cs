@@ -30,8 +30,11 @@ namespace img_scaling_3
             //btn_load.MouseEnter += InfoEvent;
             foreach (Control c in Controls) // Looping through all controls to attach MouseEnter to InfoEvent events
             {
-                c.MouseEnter += ShowInfoEvent;
-                c.MouseLeave += HideInfoEvent;
+                if (c.Tag != null)
+                { 
+                    c.MouseEnter += ShowInfoEvent;
+                    c.MouseLeave += HideInfoEvent;
+                }
             }
         }
 
@@ -317,18 +320,8 @@ namespace img_scaling_3
         private void ShowInfoEvent(object sender, EventArgs e)
         {
             Control obj = (Control)sender;
-            string ctrlInfo;
 
-            try //If the control doesn't have a tag --> don't crash and erase Info
-            {
-                ctrlInfo = obj.Tag.ToString(); 
-            }
-            catch (NullReferenceException)
-            {
-                ctrlInfo = "";
-            }
-
-            lbl_info.Text = ctrlInfo;
+            lbl_info.Text = obj.Tag.ToString();
         }
 
         private void HideInfoEvent(object sender, EventArgs e)
